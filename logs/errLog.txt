@@ -1,0 +1,9 @@
+04012023	09:41:18	3d67f2f5-f70f-46c8-ae7a-f2d24415bdd1	TypeError: fsPromises.readFil is not a function
+04012023	20:09:45	a6f34123-62f4-4ac5-ba9b-2db70f33dac8	Error: Not allowed by CORS
+04012023	20:18:57	fece6660-79f3-4f72-85e6-9efd89c63555	Error: Not allowed by CORS
+04012023	21:16:03	03807153-ec04-4119-8e4c-d729fff11fcb	SyntaxError: Unexpected token " in JSON at position 0
+04012023	21:18:15	cd67b569-0b42-4125-816c-aed2bf507822	SyntaxError: Unexpected token " in JSON at position 0
+05012023	10:30:05	3058b6f9-245b-4811-b166-2d0d5b182ef2	SyntaxError: Unexpected string in JSON at position 15
+06012023	01:24:59	cc01ec28-a966-46ef-8a2d-e6bf65c92a38	SyntaxError: Unexpected token ' in JSON at position 43
+09012023	10:22:20	dcb58b72-6244-4f7b-859e-a3cd5c0ce8d1	TypeError: whitelist.includes is not a function
+09012023	10:49:25	a6d8e371-ee25-4af6-adcb-83d23b5099c6	TypeError: authHeader?.startWith is not a function

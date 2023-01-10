@@ -1,0 +1,19 @@
+[
+ {
+  "username": "Michael",
+  "roles": { "User": 2001, "Editor": 1984, "Admin": 5150 },
+  "password": "$2b$10$9Br1XYQz2LHkMf/0DlAXWOWdko1MJwy8Uzb.Wm9.Zbr0DlQ46o5eu"
+ },
+ {
+  "username": "David",
+  "roles": { "User": 2001, "Editor": 1984 },
+  "password": "$2b$10$i2hmO8PjErg98jkydTcvye1OtY//ds.kE7GdXgMBdNHzCXHNpOeBq",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRhdmlkIiwiaWF0IjoxNjczMjU3OTg3LCJleHAiOjE2NzMzNDQzODd9.Rb6ldXh98lsl8K8b2SCC2liDzqySZMVNA6adDDbuR7E"
+ },
+ {
+  "username": "fatima",
+  "roles": { "User": 2001 },
+  "password": "$2b$10$hOulFRdD6GZ9.z9y19TfdeKjgWeaUkLTAbl2Ot3xE0BOqNQJAmCgm",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhdGltYSIsImlhdCI6MTY3MzI1ODA3NCwiZXhwIjoxNjczMzQ0NDc0fQ.HI3JpS5Uk_yQvH3frO_8DVlFHvWd6TgCZaWie28TxJY"
+ }
+]
