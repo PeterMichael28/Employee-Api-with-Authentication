@@ -58,7 +58,7 @@ app.use( '/refresh', require( './routes/api/refresh' ) );  //refresh token api r
 
 
 
-app.use( verifyJWT );
+app.use( verifyJWT );                                                                                                                                   
 app.use('/employees', require('./routes/api/employees'))  //api route
 
 

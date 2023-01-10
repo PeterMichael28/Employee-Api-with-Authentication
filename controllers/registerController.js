@@ -1,10 +1,5 @@
-const userDB = {
-    users: require( '../model/user.json' ),
-    setUser: function( data ) {this.users = data}
-};
+const User = require('../model/User')
 
-const fsPromises = require( 'fs' ).promises;
-const path = require( 'path' );
 
 const bcrypt = require( 'bcrypt' );
 
@@ -15,12 +10,11 @@ const handleNewUser = async ( req, res ) => {
     
     //if username or password wasnt sent
     if(!username || !password ) {
-        res.status( 400 );
         return res.status(400).json( {'message': 'Username or password not sent' } );
     }
 
     //checking if the user already exists
-    const duplicate = userDB.users.find( person => person.username === username )
+    const duplicate = await User.findOne({username}).exec();
     if ( duplicate ) {
         return res.status(409).json( {'message': 'Username already exists' } ); //409 for conflict
     }
@@ -29,17 +23,11 @@ const handleNewUser = async ( req, res ) => {
     try {
         //hashing the pwd with bcrypt
         const hashedPwd = await bcrypt.hash( password, 10 )
-        const newUsers = { "username": username, "roles": {"User": 2001}, "password": hashedPwd }
-        
         //saving the new user
-        userDB.setUser( [ ...userDB.users, newUsers ] )
-
-        //writing the details to the file
-        await fsPromises.writeFile( path.join( __dirname, '..', 'model', 'user.json' ), JSON.stringify( userDB.users) )
-        
-        console.log(userDB.users)
+        const result = await User.create( { "username": username, "password": hashedPwd } );
+        console.log(result)
         //sending response
-        res.status( 201 ).json( {'success': `New user ${newUsers.username} created successfully`} ); //200 for created
+        res.status( 201 ).json( {'success': `New user ${username} created successfully`} ); //200 for created
 
 
     } catch ( error ) {

@@ -1,10 +1,4 @@
-const userDB = {
-    users: require( '../model/user.json' ),
-    setUser: function( data ) {this.users = data}
-};
-
-const fsPromises = require('fs').promises;
-const path = require('path');
+const User = require('../model/User')
 
 
 
@@ -20,22 +14,19 @@ const handleLogout = async ( req, res ) => {
     const refreshToken = cookies.jwt;
     
     //checking if refresh token is there
-    const founduser = userDB.users.find(person => person.refreshToken === refreshToken)
+    const founduser = await User.findOne( { refreshToken}).exec()
             
     if ( !founduser ) {
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
-        return res.sendStatus( 204 ) // sucessful but no content
+        return res.sendStatus( 204 ) // successfull but no content
     }
 
- //delete the refresh token from the db
-    const otherUsers = userDB.users.filter(person => person.refreshToken !== founduser.refreshToken)
-    const currentUsers = { ...founduser, refreshToken: '' }
-    userDB.setUser([...otherUsers, currentUsers])
+    //delete the refreshToken
+    founduser.refreshToken = ''
 
-    await fsPromises.writeFile(
-        path.join( __dirname, '..', 'model', 'user.json' ),
-        JSON.stringify( userDB.users )
-    )
+    const result = await founduser.save()
+
+    console.log(result)
 
     res.clearCookie( 'jwt', { httpOnly: true, sameSite: 'None', secure: true} ) //secure - true - only serves on https
     res.sendStatus( 204 ) // ok but no content

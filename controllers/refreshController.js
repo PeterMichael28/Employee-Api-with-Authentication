@@ -1,7 +1,4 @@
-const userDB = {
-    users: require( '../model/user.json' ),
-    setUser: function( data ) {this.users = data}
-};
+const User = require('../model/User')
 
 const jwt = require( 'jsonwebtoken' )
 
@@ -19,7 +16,7 @@ const handleRefreshToken = async ( req, res ) => {
     const refreshToken = cookies.jwt;
     
     //checking if user exists
-    const founduser = userDB.users.find(person => person.refreshToken === refreshToken)
+    const founduser = await User.findOne({refreshToken}).exec()
             
     if ( !founduser ) {
         return res.sendStatus( 403 ) // forbidden

@@ -1,10 +1,4 @@
-const userDB = {
-    users: require( '../model/user.json' ),
-    setUser: function( data ) {this.users = data}
-};
-
-const fsPromises = require('fs').promises;
-const path = require('path');
+const User = require('../model/User')
 
 const bcrypt = require('bcrypt');
 const jwt = require( 'jsonwebtoken' )
@@ -22,7 +16,7 @@ const userLogin = async ( req, res ) => {
     }
     
     //checking if user exists
-    const founduser = userDB.users.find(person => person.username === username)
+    const founduser = await User.findOne( { username}).exec()
             
     if ( !founduser ) {
         return res.status( 401 ).json( { 'message': 'Username is not recognized'} )
@@ -51,17 +45,12 @@ const userLogin = async ( req, res ) => {
 
         //saving the refresh token to the user data
 
-        //creating an array of other users
-        const otherUsers = userDB.users.filter( ( person ) => person.username !== founduser.username )
-        
-        //current users
-        const currentUsers = { ...founduser, refreshToken }
-        
-        userDB.setUser([...otherUsers, currentUsers])
+        founduser.refreshToken = refreshToken
 
-        await fsPromises.writeFile( path.join( __dirname, '..', 'model', 'user.json' ), JSON.stringify( userDB.users ) );
-            
-        res.cookie( 'jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true,  maxAge: 24 * 60 * 60 ^ 1000 } );
+        const result = await founduser.save()
+
+        console.log(result)
+        res.cookie( 'jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 ^ 1000 } ); //secure: true, 
         return res.json( { accessToken } );
     } else {
         return res.status( 401 ).json( { 'message': 'Incorrect Password'} )

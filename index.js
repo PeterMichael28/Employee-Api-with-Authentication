@@ -12,7 +12,15 @@ const { createDecipheriv } = require( 'crypto' );
 const corsOptions = require( './config/corsOption' )
 //getting jwt verification
 const verifyJWT = require( './middleware/verifyJWT' )
-const credentials = require('./middleware/credentials')
+const credentials = require( './middleware/credentials' )
+//ConnectDB
+const connectDB = require( './config/dbConn' )
+connectDB()
+
+//mongoose
+const mongoose = require('mongoose')
+
+
 
 //cookie parser
 
@@ -97,7 +105,12 @@ app.use(error)
 
 
 //listening to the server
-app.listen( PORT, () => console.log('server up and running on port ' + PORT))
+mongoose.set('strictQuery', true);
+
+mongoose.connection.once( 'open', () => {
+    console.log( 'Connected to MongoDB' )
+    app.listen( PORT, () => console.log('server up and running on port ' + PORT))
+})
     
     
 
